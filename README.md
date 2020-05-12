@@ -2,7 +2,7 @@
 last updated: 15 May 2020 
 
 # Tweet Analysis for Camp Fire (CA, 2018)
-**
+*INSERT short summary of project*
 - Project team: Justin Fischer, Matt Burke
 
 # Contents:
