@@ -14,6 +14,7 @@ Mapping
     - Plotly's Python graphing library makes interactive, publication-quality maps online. Examples of how to make maps with Plotly and Mapbox.
     - [using a slider](https://amaral.northwestern.edu/blog/step-step-how-plot-map-slider-represent-time-evolu)
       - instructions for how we could create a slider to show tweets over duration of fire
+    - [bubble animation](https://plotly.com/python/v3/gapminder-example/)
   - [interactive example](https://benjaminmetcalfe.maps.arcgis.com/apps/webappviewer/index.html?id=ad0525f04ff5484d88ecf6a18eb8a8cc)
     - POC from a past cohort
   - [draw cirles](https://www.mapdevelopers.com/draw-circle-tool.php)
