@@ -1,8 +1,19 @@
-Mapping resources
-- [tableau](https://public.tableau.com/en-us/s/)
-- [bokeh](https://docs.bokeh.org/en/latest/docs/user_guide/geo.html)
-  - integrates with python
-  - integrates with: OpenStreetMap, Google Maps
-- [geopandas](https://geopandas.org/)
-- [plotly](https://plotly.com/python/maps/)
-  - Plotly's Python graphing library makes interactive, publication-quality maps online. Examples of how to make maps with Plotly and Mapbox.
+Mapping 
+- Ideas for what to map
+  - split of tweet classification (i.e., is camp fire, is not camp fire) 
+    - in aggregate; over time (i.e., day-by-day)
+  - frequency of keywords used by city
+  - 
+- Mapping tools 
+  - [tableau](https://public.tableau.com/en-us/s/)
+  - [bokeh](https://docs.bokeh.org/en/latest/docs/user_guide/geo.html)
+    - integrates with python
+    - integrates with: OpenStreetMap, Google Maps
+  - [geopandas](https://geopandas.org/)
+  - [plotly](https://plotly.com/python/maps/)
+    - Plotly's Python graphing library makes interactive, publication-quality maps online. Examples of how to make maps with Plotly and Mapbox.
+  - Latitude / longitude coordinates
+    - *Butte County, CA*  39.6254° N, 121.5370° W
+    - *Paradise, CA* 39.7596° N, 121.6219° W
+    - *Chico, CA* 39.7285° N, 121.8375° W
+    - *Sacramento, CA* 38.5816° N, 121.4944° W
