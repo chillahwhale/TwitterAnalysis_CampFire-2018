@@ -18,7 +18,6 @@ Mapping
     - could be helpful visual aid to show the area tweets were pulled from
   - Latitude / longitude coordinates
     - *Butte County, CA*  39.6254° N, 121.5370° W
-      - 
     - *Paradise, CA* 39.7596° N, 121.6219° W
       - 6030 Almond St, Paradise, CA 95969
     - *Chico, CA* 39.7285° N, 121.8375° W
