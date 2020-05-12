@@ -12,8 +12,16 @@ Mapping
   - [geopandas](https://geopandas.org/)
   - [plotly](https://plotly.com/python/maps/)
     - Plotly's Python graphing library makes interactive, publication-quality maps online. Examples of how to make maps with Plotly and Mapbox.
+  - [interactive example](https://benjaminmetcalfe.maps.arcgis.com/apps/webappviewer/index.html?id=ad0525f04ff5484d88ecf6a18eb8a8cc)
+    - POC from a past cohort
+  - [draw cirles](https://www.mapdevelopers.com/draw-circle-tool.php)
+    - could be helpful visual aid to show the area tweets were pulled from
   - Latitude / longitude coordinates
     - *Butte County, CA*  39.6254° N, 121.5370° W
+      - 
     - *Paradise, CA* 39.7596° N, 121.6219° W
+      - 6030 Almond St, Paradise, CA 95969
     - *Chico, CA* 39.7285° N, 121.8375° W
+      - 517 Main St, Chico, CA 95928
     - *Sacramento, CA* 38.5816° N, 121.4944° W
+      - 828 I St, Sacramento, CA 95814
