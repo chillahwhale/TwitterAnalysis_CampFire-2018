@@ -1,8 +1,7 @@
-
-15 May 2020 
+15 May 2020 
 
 # Tweet Analysis for Camp Fire (CA, 2018)
-*Can we build a list of keywords to help detect that an event is happening from social media posts?*
+*Can we build a list of keywords to help detect that a disaster is happening from social media posts?*
 - Project team: Justin Fischer, Matt Burke
 
 # Contents:
@@ -13,108 +12,104 @@
 - [Models and Techniques](#Models-and-Techniques)
 - [Conclusions](#Conclusions)
 - [Next Steps](#Next-Steps)
-- [Sources and References](#Sources-and-References)
+
 
 # Repo Organization
 - *Datasets:* includes source and cleaned datasets used to model. See [below](#Data-Summary) for data description.
 - *Code:* includes project code. For this project all code is in Jupyter Notebooks:
-	- *00_Data-Collection.* data scraped with [GetOldTweets3 API](#https://github.com/Mottl/GetOldTweets3)
-  - *01_dictionarybuilding.* some feature engineering inlcuding: more precise location data, sentiment analysis, classifying tweets as during fire or not. 
-  - *02_sentiment.* copy description included at the top of the notebook
-  - *03_kMeans.* model for k-Means clustering.
-- *CampFire2018-presentation.pdf.* this is the deck used for the project presentation, delivered on 5/15/20 to General Assembly students and instructors. 
+	- *00_Data-Collection.* scraping twitter data with [GetOldTweets3 API](#https://github.com/Mottl/GetOldTweets3)
+	- *01_dictionarybuilding.*  feature engineering inlcuding: more precise location data, sentiment analysis, classifying tweets as during fire or not. 
+	- *02_sentiment.* sentiment analysis using Twitter NLP Toolkit.
+	- *03_clustering.* k-means clustering models.
+	- *04_charting.* charts for presentation.
+- *CampFire2018-presentation.pdf.* this is the deck used for the project presentation, delivered on 5/15/20 to General Assembly students and instructors. 
 
 # Problem Statement
-*Insert problem statement*
+*Can we build a list of keywords to help detect that an event is happening from social media posts?*
 
 # Executive Summary
-***Paragraph 1: give project context. Restate problem statement. Describe data source(s). 1-liner of findings***
-*Example:* In this binary classification problem, we used Natural Language Processing (NLP) to train a classifier model on which subreddit a given post came from. The post text was scraped using Pushshift's API from subreddits *r/userexperience* and *r/UXResearch*, where *r/userexperience* was the positive class (1) and *r/UXResearch* the negative class(0). The dataset used to model consisted of 13,611 documents (comments & submissions), with a baseline accuracy of 53%/47% between positive class/negative class.
+**Context**
+For this project, we aimed to build a list of keywords to help detect if an event - and more specifically, a disaster - is happening from social media posts. For our case study we analyzed Twitter data surrounding the 2018 "Camp Fire" in Butte County, CA. See [here](https://en.wikipedia.org/wiki/Camp_Fire_(2018)) for more details on the disaster. Reasons for selecting Camp Fire included:
+- timing (i.e., relatively recent)
+- occurred in english-speaking country (so we wouldn't have to translate text)
+- high media coverage (allows for ample research)
 
 
-***Paragraph 2: describe model(s) and technique(s) used.***
-*Example:* The following classifier models were trained: Logistic Regression, Multinomial Naive Bayes, Random Forest, AdaBoost, Voting Classifier. Models were trained using pipelines and GridSearch to test different vectorizers - i.e., CountVectorizer and TfidfVectorizer - and hyperparameters. Models were then evaluated based on their accuracy scores. The best performing model scored 74% accuracy on the train data and 72% accuracy on the test data. This was a Logistic Regression model passed through the TfidfVectorizer with an n-gram range of (1,2) and an l1 penalty (i.e., lasso regression).
+**Data**
+We gathered the data using the  [GetOldTweets3 API](#https://github.com/Mottl/GetOldTweets3). Tweets were location-based and within a 100 mile radius of Paradise, CA, where the fire started. Tweet date range was between 11/1/18 to 11/26/18 (*note: the fire spanned from 11/8-11/25*). In addition to tweet location, timestamp, and text, we used the API to pull mentions, number of replies, and tweet links. Before modeling and analysis, we also did some basic feature engineering. This included binary classification of if a tweet was fire-related or not as well as if it was during the fire date range or not, and well as scoring tweets based on the number of fire-related keywords it contained. 
 
+**Modeling and Analysis**
+Our modeling and analysis only included text data. The primary model we used was k-means clustering on tweets during the fire in order to identify categories of tweets. We determined that the optimal amount of clusters was 5, as it struck the best balance between interpretability and granularity. Cluster labels included: traffic-related, emotional, California (general), photo-related, and general information.
 
-***Paragraph 3: summarize / compare findings and their significance.***
-*Example:* The test accuracy score of 72% was 19 percentage points than the baseline accuracy of 53% for the positive class. There were two primary challenges with improving the accuracy score. First, the content of each subreddit is very similar. User Experience and User Experience Research share many of the same types of posts with similar language. The second, and perhaps most important, challenge was computing constraints. With 6 cores, my computer was limited in the amount of information it could process and time in which it could process it. Some models took up to 30 minutes to fit while others simply timed out. This was a challenge when I tried to fit complex models (e.g., Radom Forest) and/or test various hyperparameters simultaneously.
+We also inlcuded sentiment analysis in order to get a sense of the positive/negative split of tweets before and during the fire. The positive/negative splits were as follows: 86/14 pre-fire; 60/40 during fire; 65/35 overall. The lowest point in sentiment occurred on 11/12, 4 days after the fire started. It's also noteworthy that sentiment trended upward, with an average sentiment of ~0.8 on 11/24. 
 
+Finally, we analyzed on our key scores in a number of ways. First, we looked at key score by sentiment. Next, we looked at key score by date. An interesting finding here was that average key scores peaked the 11/8, the day the fire started, then trended downward, averaging out a key score of 1 per day. We also looked at average key score by location. Unsurprisingly, this was highest for Paradise and Chico, those cities most impacted by the fire.
 
-***Paragraph 4: summarize recommendations and next steps. Can also describe challenges and how they should be addressed moving forward.***
-*Example:* Before putting this model into any sort of production, the accuracy scores would need to be increased by at least 15 percentage points. To that end, next steps would be acquiring more computing power and testing multiple hyperparameters (e.g., different stopwords, n-grams, penalities, etc) over various models. Upon training a model with a sufficient accuracy score, a few interesting implementations of it might include analyzing posts to recommend posting in the other subreddit in order to get more interaction or analyzing post quality to make recommendations to employers for potential candidates. These are just a few ideas that, especially when paired with other features from the API (e.g., time of post, number of upvotes), could lead to some very interesting insights. Before any idea is to be implemented, though, the accuracy score must improve.
+**Challenges and Next Steps**
+Our biggest challenge was pulling a sufficient amount of location-based tweets due to: a) API constraints, and; b) lack of location data users tagged in their tweets. Another challenge was that we only had text data to work with. There is ample, valuable information that can be gained from image-based data during times of disaster. Due to time and resource constraints, however, we were unable to include image-based data. A third constraint is the fact that we only used Twitter data. Finally, not all tweets within the 100 mile radius we were concerned with were captured; only tweets with a location tag. 
+
+This final constraint raised an interesting ethical question: *where is the line between the right to data privacy with social media and using social media data in times of disasters to potentially help save lives?* Exploring answers to that question was beyond the scope of our project, however, it is of utmost importance in considering these types of problems.
+
+In order to address these challenges and further develop a prototype, immediate next steps include:
+- Pull additional Twitter Camp Fire data in order to build out a more robust model. 
+- Improve keyword list in order to more accurately classify tweets
+- Try other models beyond k-Means clustering (e.g., integrate image recognition).
+- Test and improve on other disasters.
 
 # Data Summary
 **Data Source:**
-- *Describe where the dataset came from, how it was acquired (e.g., scraped, shared from stakeholder, aggregated).*
-- *Example:* The data for this project was scraped from Reddit using [Pushshift’s API](https://github.com/pushshift/api). [r/userexperience](https://www.reddit.com/r/userexperience/) and [r/UXResearch](https://www.reddit.com/r/UXResearch/) were the subreddits from which the text data was extracted.
+- All tweet data was scraped using [GetOldTweets3 API](#https://github.com/Mottl/GetOldTweets3). Tweet criteria included:
+	- Timeframe: 11/1/18 to 11/26/18
+	- All location-tagged tweets within 100 mile radius of Paradise, CA
+	- Cities searched: Butte County, Paradise, Chico, Magalia, Oroville
 
 **Datasets Analyzed:**
-- [dataset.csv](./path-to/file.csv)
-	- 000 rows, 00 columns
-    - describe dataset
-- [merged_processed.csv](../datasets/merged_processed.csv)
-  -  13,611 rows, 2 columns
-
+- [stacked](../datasets/stacked_clean_again.csv)
+	- includes both pre-fire tweets and during fire tweets
+- [sentiment](../datasets/stacked_sentiment_again.csv)
+	- subset of stacked dataset with fire-only tweets, used for sentiment analysis 
 
 ### Data Dictionary
 |Feature|Type|Dataset|Description|
 |--|--|--|--|
-|**Overall Qual**|*ordinal*|train|Rates the overall material and finish of the house (1-10 with 1 being Very Poor and 10 Very Excellent)|
-|**Garage Area**|*float*|train|Size of garage in square feet|
-|**1st Flr SF**|*float*|train|First Floor square feet|
-|**MS SubClass**|*nominal*|train|Identifies the type of dwelling involved in the sale (16 categories)|
-|**Lot Frontage**|*float*|train|Linear feet of street connected to property|
+|**tweet_count**|*int*|stacked|count of tweet pulled|
+|**city*|*string*|stacked|city used to pull tweet using API|
+|**id**|*integer*|stacked|twitter-generated unique id for tweet|
+|**timestamp**|*datetime*|stacked|time of tweet|
+|**tweet_text**|*string*|stacked|tweet text with url|
+|**text**|*string*|stacked|tweet text without url|
+|**hashtags**|*string*|stacked|tweet hashtags|
+|**username**|*string*|stacked|who tweeted|
+|**mentions**|*string*|stacked|@mentions in tweet|
+|**during_fire**|*binary*|stacked|1: during fire; 0: not during fire|
+|**is-fire-related**|*binary*|stacked|1: tweet is fire related; 0: is not|
+|**key_score**|*integer*|stacked|number of fire-related keywords in tweet (0-5)|
+|**sent**|*binary*|sentiment|sentiment of tweet(1: positive; 0: negative)|
+
 
 # Models and Techniques
-- *This section should provide more detail on the selected model(s), explain why they were chosen, how they were evaluated, and describe any technique(s) used (e.g., NLP, GridSearch, if cloud computing was used, etc).
-- *Basically think of this section as a detailed answer to the question, "why did you do what you did?"
-*Example:*
-- The goal was to find a classification model that performed best when classifying a subreddit post. *userexperience (1)*  was the positive class and *UXResearch (0)* the negative class. In order to do this I performed various tests on the following models:
-  - Logistic Regression
-  - Multinomial Naive Bayes
-  - Random Forest
-  - AdaBoost
-  - Voting Classifier
-- I used two vectorizers from sklearn:
-  - CountVectorizer()
-  - TfidfVectorizer()
-- For each model, I tested various combinations hyperparameters for the respective vectorizers. To do this I set up pipelines with the transformers and estimators (e.g, CountVectorizer, Logistic Regression), tested various hyperparameters (e.g., stop words, n-gram range), and ran this through a GridSearch.
-- Each model was then fit using training data.
-- Both train and test datasets were scored using accuracy and evaluated against the baseline accuracy (53% positive class; 47% negative class).
+- Justin 
 
 # Conclusions
-- Conclusions should include: 
-	- which model(s) performed best? what were their scores? what were their parameters?
-    - commentary on model performance (Analysis). why do I think the models performed like this? were there certain parameters that made a significant difference? 
-    - constraints and challenges
-    - general qualitative commentary
-*Example:*
-- *Model #4: Logistic Regression, TfidfVectorizer* performed best
-  - Train accuracy score: 74%
-  - Test accuracy score: 72%
-  - Parameters:
-    - `stopwords: 'english'` (native to sklearn)
-    - `n-gram range: (1,2)`
-    - `solver: liblinear`
-    - `penalty: l1` (lasso regression)
-  - Analysis:
-    - Though 72% accuracy was not the best across all test sets, it was the closest to that of the train set. For other models, I was getting test scores at least 20 percentage points less than those of train scores.
-    - Therefore, I selected this model as the best as it would perform most closely with expectations on unseen data.
-    - The most notable hyperparameter adjustment was changing the penalty from the default `l2` (ridge regression) to `l1` (lasso regression). All else held equal, the train/test respectively scored 92.3%/75.6% accuracy using the `l1` penalty. Allowing the coefficients to zero out using `l2` makes the train/test accuracy scores more consistent with one another.
-- Though I would have liked to see a higher accuracy score in my best model, a 72% accuracy isn't bad considering how closely related the subreddits of choice were. Compared to the baseline accuracy (53% positive class) my best model performed 19 percentage points higher.
-- The largest challenge with this project was computing constraints. Given the complexity of some of the models and their hyperparameters, my computer wasn't able to process everything. For example, when I tried to compare the `elasticnet` and `l1` hyperparameters for Logistic Regression, my computer ran for 20+ minutes before the Jupyter kernel froze. Given sufficient time and computing resources, I believe I could continue tuning the models to get an accuracy score well above 72%.
+- Our keyword-based model is a good start, however, it still includes an insufficient amount of data. In order to accurately predict emerging events and distasters, we need significantly more data from sources beyond Twitter. 
+- Keyword scoring is a highly effective way to identify the topic of a tweet. The keywords we selected could further be refined for other fires. This same methodology can also be applied to other types of distasters such as hurricanes, floods, and tornados.
+- For k-means clustering, the optimal amount of clusters was 5, as it struck the best balance between interpretability and granularity. Cluster labels included: traffic-related, emotional, California (general), photo-related, and general information.
+- Though the sentiment analysis was insightful in terms of understanding the positive/negative tones of a tweet over the course of a disaster, sentiment analysis may not be all that effective when trying to identify an emerging disaster.
 
 # Next Steps
-- Improve proof of concept on additional Twitter Camp Fire data
+- Pull additional Twitter Camp Fire data in order to build out a more robust model. This may include using additional APIs, such as [Twitter's API](https://developer.twitter.com/en/docs).
 - Aggregate data from additional social media sources
 	- e.g., 880 of the 1,130 tweets analyzed were originally posted to Instagram
 - Improve keyword list in order to more accurately classify tweets
 - Try other models beyond k-Means clustering (e.g., integrate image recognition)
 - Test and improve on other disasters
 	- “Slow” disasters (e.g., fires, floods, hurricanes)
-	- “Fast” disasters (e.g., tornados, shootings) 
+	- “Fast” disasters (e.g., tornados, shootings) 
+- Develop proof of concept
 - *Ideal state*: develop product that agencies can implement to monitor social media data
 
 
-# Sources and References 
-*If applicable, cite any sources and references (e.g., external research, datasets, quotes cited, etc)
+
+
+
+
