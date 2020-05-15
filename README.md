@@ -1,8 +1,8 @@
 
-last updated: 15 May 2020 
+15 May 2020 
 
 # Tweet Analysis for Camp Fire (CA, 2018)
-*INSERT short summary of project*
+*Can we build a list of keywords to help detect that an event is happening from social media posts?*
 - Project team: Justin Fischer, Matt Burke
 
 # Contents:
