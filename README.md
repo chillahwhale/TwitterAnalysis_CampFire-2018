@@ -89,8 +89,44 @@ In order to address these challenges and further develop a prototype, immediate 
 
 
 # Models and Techniques
-- Justin 
 
+## Feature engineering:
+### Key Scoring
+
+We created a list of root words to build a list of words from.  
+```
+Root words: 'fire', 'evac', 'smok', 'burn', 'wild', 'blaz', 'hell', 'department', 'inferno', 'help'
+```
+
+Using this list of root words and comparing them to the hashtags used in tweets, we built a dictionary.  We used root words as a way to account for plurals and other conjugations of the words or phrases.  The key score was calculated by counting each instance of a word in the keyword dictionary in a tweet (including the hashtags). The process was able to pull some of the more user generated hastags used for this specific incident.  
+
+```
+Sample Keywords: 'smokey', 'firefighter', 'evacuees', 'califirefighters', 'campfire2018', 'wildfire'
+```
+
+
+### Sentiment
+
+Using the [Twitter-NLP-Toolkit](https://github.com/eschibli/twitter-toolbox) we loaded the `small-ensemble-model` to analyze the tweets sent that were related to a fire.  Since our datarange also includes the week before the fire started, it establishes somewhat of a baseline (albeit there were a few small fires during that time period).  It is not a perfect model and since social media posts during a disaster are very nuanced it is difficult.  If we had a larger amount of posts, additional training would have been beneficial.  Sentiment also does not always indicate a disaster since there was much praise for firefighters, emergency crews and Guy Fieri tweeted about during the fire.  (Guy Fieri teamed up with World Central Kitchen and Jose Andres to help feed those displaced by the fire using a smoker)
+
+**Negative Sentiment Example**
+>“Paradise Lost”...
+we will never forget what the fire took away...hoping that some day we could return to see it again
+...I will be posting photo archives that I still have...the fire took… https://instagram.com/p/BqT4fTslWJD/?utm_source=ig_twitter_share&igshid=irywss0s3sx7  
+
+[source](https://twitter.com/heywoodphotog/status/1064033991261544449)
+
+**Positive Sentiment Example**
+> Great to join forces with wckitchen @guyfieri & @chefjoseandres  to cook 15,000 meals for those who lost their homes in the California Fires.  Happy Thanksgiving 🦃 @ Chico, California https://instagram.com/p/BqficAsn5af/?utm_source=ig_twitter_share&igshid=ku7jckq0s0eo
+ 
+ [source](https://twitter.com/ChefHales/status/1065674347581513728)
+
+<sub><sup><sub><sup><sub><sup><sub><sup>(Note: Jose Andres and WC Kitchen are currently operating in a number of cities right now to help feed those affected by the COVID-19 Pandemic)
+
+## Model:
+### K-Means Clustering
+
+Using the KMeans clustering algorithms in SK-Learn we attempted to sort tweeted words into clusters.  For this, we only used the subset of tweets about and during the 2018 Camp Fire to try to build the most useful list of terms to flag.  Initially, we just used 3 and 5 clusters but then tried to cluster for 2-20 clusters.  However, this is not the best for this because sentence structure in the English language relies on building off many of the same terms.  
 # Conclusions
 - Our keyword-based model is a good start, however, it still includes an insufficient amount of data. In order to accurately predict emerging events and distasters, we need significantly more data from sources beyond Twitter. 
 - Keyword scoring is a highly effective way to identify the topic of a tweet. The keywords we selected could further be refined for other fires. This same methodology can also be applied to other types of distasters such as hurricanes, floods, and tornados.
