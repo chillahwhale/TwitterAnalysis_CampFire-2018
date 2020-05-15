@@ -16,13 +16,13 @@ last updated: 15 May 2020
 - [Sources and References](#Sources-and-References)
 
 # Repo Organization
-- *Datasets:* includes source and cleaned datasets used to model. Further detail [below](#Data-Summary)
+- *Datasets:* includes source and cleaned datasets used to model. See [below](#Data-Summary) for data description.
 - *Code:* includes project code. For this project all code is in Jupyter Notebooks:
-	- *00_Preprocessing.* copy description included at the top of the notebook
-  - *01_EDA.* copy description included at the top of the notebook
-  - *02_Modeling.* copy description included at the top of the notebook
-- *Presentation_name.* This is the deck used for the project presentation, delivered on DATE to AUDIENCE. 
-- Any other aspects of repo, including: assets, resources/references, etc.
+	- *00_Data-Collection.* data scraped with [GetOldTweets3 API](#https://github.com/Mottl/GetOldTweets3)
+  - *01_dictionarybuilding.* some feature engineering inlcuding: more precise location data, sentiment analysis, classifying tweets as during fire or not. 
+  - *02_sentiment.* copy description included at the top of the notebook
+  - *03_kMeans.* model for k-Means clustering.
+- *CampFire2018-presentation.pdf.* this is the deck used for the project presentation, delivered on 5/15/20 to General Assembly students and instructors. 
 
 # Problem Statement
 *Insert problem statement*
@@ -52,15 +52,11 @@ last updated: 15 May 2020
 - [dataset.csv](./path-to/file.csv)
 	- 000 rows, 00 columns
     - describe dataset
-- [merged_processed.csv](./datasets/merged_processed.csv)
+- [merged_processed.csv](../datasets/merged_processed.csv)
   -  13,611 rows, 2 columns
 
 
 ### Data Dictionary
-[here's a helpful data dictionary template](https://docs.google.com/spreadsheets/d/1QWgMUvDJi9jWF86o58mie_JHXCi3TkN01XY7vqyNR58/edit#gid=206608275)
-
-*Example:*
-
 |Feature|Type|Dataset|Description|
 |--|--|--|--|
 |**Overall Qual**|*ordinal*|train|Rates the overall material and finish of the house (1-10 with 1 being Very Poor and 10 Very Excellent)|
@@ -109,8 +105,16 @@ last updated: 15 May 2020
 - The largest challenge with this project was computing constraints. Given the complexity of some of the models and their hyperparameters, my computer wasn't able to process everything. For example, when I tried to compare the `elasticnet` and `l1` hyperparameters for Logistic Regression, my computer ran for 20+ minutes before the Jupyter kernel froze. Given sufficient time and computing resources, I believe I could continue tuning the models to get an accuracy score well above 72%.
 
 # Next Steps
-- *The format (e.g. paragraphs or bullet points), length, and detail of Next Steps section will depend upon factors such as: the problem statement, the audience, the goal of the project, etc*
-- *Example:* Before putting this model into any sort of production, the accuracy scores would need to be increased by at least 15 percentage points. To that end, next steps would be acquiring more computing power and testing multiple hyperparameters (e.g., different stopwords, n-grams, penalities, etc) over various models. Upon training a model with a sufficient accuracy score, a few interesting implementations of it might include analyzing posts to recommend posting in the other subreddit in order to get more interaction or analyzing post quality to make recommendations to employers for potential candidates. These are just a few ideas that, especially when paired with other features from the API (e.g., time of post, number of upvotes), could lead to some very interesting insights. Before any idea is to be implemented, though, the accuracy score must improve.
+- Improve proof of concept on additional Twitter Camp Fire data
+- Aggregate data from additional social media sources
+	- e.g., 880 of the 1,130 tweets analyzed were originally posted to Instagram
+- Improve keyword list in order to more accurately classify tweets
+- Try other models beyond k-Means clustering (e.g., integrate image recognition)
+- Test and improve on other disasters
+	- “Slow” disasters (e.g., fires, floods, hurricanes)
+	- “Fast” disasters (e.g., tornados, shootings) 
+- *Ideal state*: develop product that agencies can implement to monitor social media data
+
 
 # Sources and References 
 *If applicable, cite any sources and references (e.g., external research, datasets, quotes cited, etc)
